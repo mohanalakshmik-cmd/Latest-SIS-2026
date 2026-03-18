@@ -1438,17 +1438,6 @@ function upgradeToV8() {
         log.push("Users sheet: 'sidPrefix' column already exists");
       }
 
-      // Add sidPrefix column if missing (v8.1)
-      var updatedHeader2 = usersSh.getRange(1, 1, 1, usersSh.getLastColumn()).getValues()[0]
-        .map(function(h){ return String(h).trim().toLowerCase(); });
-      if (updatedHeader2.indexOf("sidprefix") === -1) {
-        var sidCol = usersSh.getLastColumn() + 1;
-        usersSh.getRange(1, sidCol).setValue("sidPrefix");
-        styleHeader(usersSh, sidCol);
-        log.push("Users sheet: added 'sidPrefix' column for campus partner ID series");
-      } else {
-        log.push("Users sheet: 'sidPrefix' column already exists");
-      }
     }
   }
 
@@ -1571,12 +1560,12 @@ function setupSpreadsheet() {
   var usersSheet = getSheet(SHEET.USERS);
   if (usersSheet && usersSheet.getLastRow() <= 1) {
     var now = new Date().toISOString();
-    usersSheet.appendRow(["admin",            "admin123",   "admin",   "Administrator",    "admin@aws.edu",          "Chennai",   now, "true"]);
-    usersSheet.appendRow(["staff",            "staff123",   "staff",   "Staff Member",     "staff@aws.edu",          "Chennai",   now, "true"]);
-    usersSheet.appendRow(["coach",            "coach123",   "staff",   "Success Coach",    "coach@aws.edu",          "Chennai",   now, "true"]);
-    usersSheet.appendRow(["partner_srilanka", "partner123", "partner", "Sri Lanka Partner","partner.lk@aws.edu",     "Sri Lanka", now, "true"]);
-    usersSheet.appendRow(["partner_uae",      "partner456", "partner", "UAE Partner",      "partner.uae@aws.edu",    "UAE",       now, "true"]);
-    usersSheet.appendRow(["partner_spain",    "partner789", "partner", "Spain Partner",    "partner.spain@aws.edu",  "Spain",     now, "true"]);
+    usersSheet.appendRow(["admin",            "admin123",   "admin",   "Administrator",    "admin@aws.edu",          "Chennai",   now, "true", ""]);
+    usersSheet.appendRow(["staff",            "staff123",   "staff",   "Staff Member",     "staff@aws.edu",          "Chennai",   now, "true", ""]);
+    usersSheet.appendRow(["coach",            "coach123",   "staff",   "Success Coach",    "coach@aws.edu",          "Chennai",   now, "true", ""]);
+    usersSheet.appendRow(["partner_srilanka", "partner123", "partner", "Sri Lanka Partner","partner.lk@aws.edu",     "Sri Lanka", now, "true", "SL"]);
+    usersSheet.appendRow(["partner_uae",      "partner456", "partner", "UAE Partner",      "partner.uae@aws.edu",    "UAE",       now, "true", "UAE"]);
+    usersSheet.appendRow(["partner_spain",    "partner789", "partner", "Spain Partner",    "partner.spain@aws.edu",  "Spain",     now, "true", "SP"]);
   }
 
   SpreadsheetApp.getUi().alert(
